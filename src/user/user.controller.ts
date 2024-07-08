@@ -1,19 +1,13 @@
 import { Controller, Get, Param, Post } from '@nestjs/common';
+import { UserService } from './user.service';
+import { CreateUserDto } from './dtos/user.dto';
 
 @Controller('user')
 export class UserController {
-  @Get('roles')
-  findAll(): string {
-    return 'This action returns all users roles';
-  }  
-
-  @Get(':id')
-   findOne(@Param('id') id: string): string{
-       return `This action returns a #${id} user`
-   }
+  constructor(private readonly userService: UserService){}
 
   @Post('register')
-  create(): string{
-    return "This action adds a new user"
+  create(CreateUserDto: CreateUserDto){
+    return this.userService.createUser(CreateUserDto)
   }
 }
